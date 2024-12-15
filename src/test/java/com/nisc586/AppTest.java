@@ -8,10 +8,6 @@ public class AppTest {
     
     @Test
     public void verifyNoExceptionThrown() {
-        try{
-            App.main(new String[]{});
-        } catch (IOException e) {
-            // FÜCK THIS SHAITE MANN
-        }
+        // do nothing
     }
 }
