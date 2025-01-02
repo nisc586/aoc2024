@@ -12,6 +12,7 @@ public class Day03Test {
 
     @Test
     public void testPart2() {
-        
+        String input = Utils.getInputText("src\\test\\resources\\day03.txt");
+        assertEquals("48", Day03.part2(input));
     }
 }
