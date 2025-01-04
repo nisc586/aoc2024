@@ -13,6 +13,6 @@ public class Day04Test {
     @Test
     public void testPart2() {
         String input = Utils.getInputText("src\\test\\resources\\day04.txt");
-        assertEquals("9", Day04.part1(input));
+        assertEquals("9", Day04.part2(input));
     }
 }
