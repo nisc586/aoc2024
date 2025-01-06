@@ -2,7 +2,9 @@ package com.nisc586;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Day05 {
     public static String part1(String input) {
@@ -54,20 +56,27 @@ public class Day05 {
     }
 
     private static int[] sortedUpdate(int[] update, List<int[]> rules) {
+        Set<String> ruleSet = new HashSet<>();
+        for (int[] rule : rules) {
+            ruleSet.add(rule[0] + "," + rule[1]);
+        }
+        
         List<Integer> sorted = new ArrayList<>();
 
         for (int num : update) {
-            int idxPos = 0;
+            int idxPos = sorted.size();  // Default to adding at the end.
+
             for (int i=0; i<sorted.size(); i++) {
-                for (int[] rule : rules) {
-                    if (Arrays.equals(rule, new int[] {num, sorted.get(i)})) {
-                        idxPos = Math.min(i, idxPos);
-                        break;
-                    } else if (Arrays.equals(rule, new int[] {sorted.get(i), num})) {
-                        idxPos = Math.max(i+1, idxPos);
-                        break;
-                    }
+                int current = sorted.get(i);
+
+                if (ruleSet.contains(num + "," + current)) {
+                    // num should be after current
+                    idxPos = Math.min(i, idxPos);
+                } else if (ruleSet.contains(current + "," + num)) {
+                    // current should be before num
+                    idxPos = Math.max(i+1, idxPos);
                 }
+                
             }
             sorted.add(idxPos, num);
         }
