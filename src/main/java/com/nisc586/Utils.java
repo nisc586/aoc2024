@@ -3,6 +3,7 @@ package com.nisc586;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -40,5 +41,15 @@ public class Utils {
         }
         scanner.close();
         return twoDArray;
+    }
+
+    
+    public static List<int[]> parseToListOfInts(String text, String sep) {
+        /*Parse a string of lines separated by \n to a list of Integers */
+        List<int[]> result = text.lines()
+            .map(s -> s.split(sep))
+            .map(nums -> Arrays.stream(nums).mapToInt(Integer::parseInt).toArray())
+            .toList();
+        return result;
     }
 }
