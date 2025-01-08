@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -51,5 +52,24 @@ public class Utils {
             .map(nums -> Arrays.stream(nums).mapToInt(Integer::parseInt).toArray())
             .toList();
         return result;
+    }
+
+
+    public static <T> Iterable<T> cycle(List<T> list) {
+        return () -> new Iterator<>() {
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return !list.isEmpty();
+            }
+
+            @Override
+            public T next() {
+                T element = list.get(index);
+                index = (index + 1) % list.size();
+                return element;
+            }
+        };
     }
 }
