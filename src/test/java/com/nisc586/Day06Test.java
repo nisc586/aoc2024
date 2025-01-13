@@ -16,5 +16,6 @@ public class Day06Test {
     @Test
     public void testPart2() {
         String input = Utils.getInputText(filePath);
+        assertEquals("6", Day06.part2(input));
     }
 }
