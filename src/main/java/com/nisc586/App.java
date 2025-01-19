@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 
 public class App {
     public static void main(String[] args){
-        int day = 7;
+        int day = 8;
         if (args.length != 0) {
             day = Integer.valueOf(args[0]);
         }

@@ -4,8 +4,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -44,7 +46,52 @@ public class Utils {
         return twoDArray;
     }
 
-    
+
+    public static Map<Integer[], Character> get2DMap(String text) {
+        // Parse a mapping, where the keys are row-column pairs and the values are chars depending on input
+        Map<Integer[], Character> result = new HashMap<>();
+        
+        try (Scanner scanner = new Scanner(text)) {
+            Integer row = 0;
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                for (int col=0; col < line.length(); col++) {
+                    Character c = line.charAt(col);
+                    if (!c.equals('.')) {
+                        Integer[] position = {row, col};
+                        result.put(position, c);
+                    }
+                }
+                row++;
+            }
+        }
+        return result;
+    }
+
+    public static Map<Character, List<Integer[]>> get2DReverseMap(String text) {
+        // Parse a mapping, where the keys are chars, and the values are their positions in the input
+        Map<Character, List<Integer[]>> result = new HashMap<>();
+
+        try (Scanner scanner = new Scanner(text)) {
+            Integer row = 0;
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                for (int col=0; col < line.length(); col++) {
+                    Character c = line.charAt(col);
+                    if (!c.equals('.')) {
+                        List<Integer[]> temp = result.getOrDefault(c, new ArrayList<Integer[]>());
+                        Integer[] position = {row, col};
+                        temp.add(position);
+                        result.put(c, temp);
+                    }
+                }
+                row++;
+            }
+        }
+        return result;
+    }
+
+
     public static List<int[]> parseToListOfInts(String text, String sep) {
         /*Parse a string of lines separated by \n to a list of Integers */
         List<int[]> result = text.lines()
