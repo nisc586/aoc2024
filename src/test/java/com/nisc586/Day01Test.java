@@ -1,19 +1,27 @@
 package com.nisc586;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class Day01Test {
+public class Day01Test extends AbstractDayTest{
+            
+    static {
+        dayNumber = 1;
+    }
+
+    @BeforeAll
+    static void initAll() {
+        baseInitAll();
+    }
+    
     @Test
     public void testPart1() {
-        String input = Utils.getInputText("src\\test\\resources\\day01.txt");
-        assertEquals("11", Day01.part1(input));
+        baseTestPart1("11");
     }
 
     @Test
     public void testPart2() {
-        String input = Utils.getInputText("src\\test\\resources\\day01.txt");
-        assertEquals("31", Day01.part2(input));
+        baseTestPart2("31");
     }
+
 }

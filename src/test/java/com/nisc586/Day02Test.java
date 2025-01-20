@@ -2,19 +2,32 @@ package com.nisc586;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class Day02Test {
+public class Day02Test extends AbstractDayTest{
+        
+    static {
+        dayNumber = 2;
+    }
+
+    @BeforeAll
+    static void initAll() {
+        baseInitAll();
+    }
+    
     @Test
     public void testPart1() {
-        String input = Utils.getInputText("src\\test\\resources\\day02.txt");
-        assertEquals("2", Day02.part1(input));
+        baseTestPart1("2");
     }
 
     @Test
     public void testPart2() {
-        String input = Utils.getInputText("src\\test\\resources\\day02.txt");
-        assertEquals("4", Day02.part2(input));
+        baseTestPart2("4");
+    }
+
+    @Test
+    public void extraTestPart2() {
         assertEquals("1", Day02.part2("5 1 7 8 9"));
         assertEquals("1", Day02.part2("1 6 7 8 9"));
     }

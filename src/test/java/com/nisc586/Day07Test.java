@@ -4,22 +4,28 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class Day07Test {
-    private int dayNumber = 7;
-    private String filePath = String.format("src\\test\\resources\\day%1$02d.txt", dayNumber);
+public class Day07Test extends AbstractDayTest{
+
+    static {
+        dayNumber = 7;
+    }
+    
+    @BeforeAll
+    static void initAll() {
+        baseInitAll();
+    }
+    
     @Test
     public void testPart1() {
-        String input = Utils.getInputText(filePath);
-        assertEquals("3749", Day07.part1(input));
+        baseTestPart1("3749");
     }
-
 
     @Test
     public void testPart2() {
-        String input = Utils.getInputText(filePath);
-        assertEquals("11387", Day07.part2(input));
+        baseTestPart2("11387");
     }
 
     @Test
