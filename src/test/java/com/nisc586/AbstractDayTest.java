@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractDayTest {
+    // Abstract base class for shared test logic across different days
     protected static int dayNumber;
     protected static String filePath;
     protected static String className;
@@ -12,6 +13,7 @@ public abstract class AbstractDayTest {
     protected static Method part1, part2;
 
     static void baseInitAll() {
+        // load Day class and input filepath
         filePath = String.format("src\\test\\resources\\day%1$02d.txt", dayNumber);
         className = String.format("com.nisc586.Day%1$02d", dayNumber);
         try {
