@@ -3,6 +3,8 @@ package com.nisc586;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 public class Day09 {
     public static String part1(String input) {
         Integer[] blocks = parseDiskMap(input).toArray(new Integer[0]);
@@ -26,17 +28,67 @@ public class Day09 {
             }
         }
 
-        long checkSum = 0;
-        for(int i=0; i<blocks.length; i++) {
-            if(blocks[i] == null) break;
-            checkSum += i * blocks[i];
-        }
-
-        return String.valueOf(checkSum);
+        return String.valueOf(checkSum(blocks));
     }
     
     public static String part2(String input) {
-        return "";
+        Integer[] blocks = parseDiskMap(input).toArray(new Integer[0]);
+
+        /*
+         * Attempt to move whole blocks to the leftmost free span that could fit the
+         * file.
+         * Attempt to move each block exactly once.
+         * Go from the hightest ID to the lowest ID.
+         */
+
+        Integer id = 0;
+        // Get the hightest id
+        for (int x=blocks.length-1; x >= 0; x--){
+            if (blocks[x] != null) {
+                id = blocks[x];
+                break;
+            }    
+        }
+
+        int blockStart, blockEnd, blockSize;
+
+        while(id>0) {
+
+            blockStart = ArrayUtils.indexOf(blocks, id);
+            blockEnd = ArrayUtils.lastIndexOf(blocks, id);
+            blockSize = blockEnd - blockStart + 1;
+            
+            for (int i=0; i < blockStart; i++){
+                Integer spanStart = -1;
+                if(blocks[i] == null && spanStart==-1) {
+                    // Start of a free space
+                    spanStart = i;
+
+                    // Check if the block could fit
+                    boolean blockFits = true;
+                    for (int j=1; j < blockSize; j++){
+                        blockFits = blockFits && (blocks[i+j]==null);
+                    }
+                    
+                    // If yes, move the block and break the loop
+                    if (blockFits) {
+                        for (int k=0; k<blockSize; k++){
+                            blocks[i+k] = id;
+                            blocks[blockStart+k] = null;
+                        }
+                        break;
+                    }
+                
+                } else if (blocks[i] != null && spanStart != -1) {
+                    // End of a free space
+                    spanStart = -1;
+                }
+            }
+            
+            id--;
+        }
+
+        return String.valueOf(checkSum(blocks));
     }
 
     public static List<Integer> parseDiskMap(String line) {
@@ -59,5 +111,14 @@ public class Day09 {
             }
         };
         return blocks;
+    }
+
+    public static long checkSum(Integer[] blocks) {
+        long total = 0;
+        for(int i=0; i<blocks.length; i++) {
+            if(blocks[i] == null) continue;
+            total += i * blocks[i];
+        }
+        return total;
     }
 }
