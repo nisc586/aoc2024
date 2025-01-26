@@ -21,6 +21,6 @@ public class Day10Test extends AbstractDayTest {
 
     @Test
     public void testPart2() {
-        baseTestPart2("");
+        baseTestPart2("81");
     }
 }

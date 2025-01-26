@@ -8,10 +8,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 
 public class Day10 {
-    static {
-        
-    }
-    
 
     public static String part1(String input) {
         List<List<Character>> topography = Utils.get2DArray(input);
@@ -28,8 +24,21 @@ public class Day10 {
 
         return String.valueOf(result);
     }
+
+
     public static String part2(String input) {
-        return "";
+        List<List<Character>> topography = Utils.get2DArray(input);
+        int result = 0;
+
+        for(int r=0; r < topography.size(); r++){
+            for(int c=0; c < topography.size(); c++){
+                if (topography.get(r).get(c).equals('0')){
+                    result += searchTrail2(r, c, topography);;
+                }
+            }
+        }
+
+        return String.valueOf(result);
     }
 
 
@@ -56,12 +65,41 @@ public class Day10 {
             cc = col + dir[1];
             
             // Assert bounds and height
-            hh = Character.getNumericValue(M.get(rr).get(cc));
             if (0 <= rr && rr < N && 0 <= cc && cc < N) {
+                hh = Character.getNumericValue(M.get(rr).get(cc));
                 if (hh == height+1) {targetPositions.addAll(searchTrail(rr, cc, M));}
             }
         }
 
         return targetPositions;
+    }
+
+    
+    public static int searchTrail2(int row, int col, List<List<Character>> M){
+        final Integer[][] DIRECTIONS = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // cardinal directions up, down, left, right
+        final int N = M.size();
+
+        int height = Character.getNumericValue(M.get(row).get(col));
+        // End of trail
+        if (height == 9)  {return 1;}
+        
+        int sum=0;
+        int rr, cc, hh;
+        for (Integer[]dir:DIRECTIONS) {
+            // Continue search in all directions
+            rr = row + dir[0];
+            cc = col + dir[1];
+            
+            // Assert bounds and height
+            if (0 <= rr && rr < N && 0 <= cc && cc < N) {
+                hh = Character.getNumericValue(M.get(rr).get(cc));
+                if (hh == height+1) {
+                    // Recursive call, if path is good
+                    sum += searchTrail2(rr, cc, M);
+                }
+            }
+        }
+
+        return sum;
     }
 }
