@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -29,6 +30,26 @@ public class Utils {
             scanner.close();
         }
         return text;
+    }
+
+    public static List<Integer> getIntList(String line) {
+        List<Integer> nums = new LinkedList<>();
+        try(Scanner sc = new Scanner(line)){
+            while (sc.hasNextInt()) {
+                nums.add(sc.nextInt());
+            }
+        }
+        return nums;
+    }
+
+    public static List<Long> getLongList(String line) {
+        List<Long> nums = new LinkedList<>();
+        try(Scanner sc = new Scanner(line)){
+            while (sc.hasNextLong()) {
+                nums.add(sc.nextLong());
+            }
+        }
+        return nums;
     }
 
     public static List<List<Character>> get2DArray(String text) {
