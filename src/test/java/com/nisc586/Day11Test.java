@@ -23,6 +23,7 @@ public class Day11Test extends AbstractDayTest{
         baseTestPart1("55312");
     }
 
+
     @Test
     public void testSingleIteration() {
         List<Long> in = Utils.getLongList("0 1 10 99 999");
